@@ -20,7 +20,7 @@ public class UserService {
 	public List<User> findAll(){		
 		return repo.findAll();
 	}
-	/*
+/*	
 	public User findById(String id) {
 		User user = repo.findOne(id);
 		if(user == null) {
@@ -28,14 +28,18 @@ public class UserService {
 		}
 		return user;
 	}
-	*/
+*/	
 	
 	public User insert(User obj) {
 		return repo.insert(obj);
 	}
 	
+	public void delete(String id) {		
+		repo.deleteById(id);
+	}
+	
 	public User fromDto(UserDTO objDto) {
 		return new User(objDto.getId(), objDto.getName(), objDto.getEmail()); 
-	}
+	}		
 	
 }
