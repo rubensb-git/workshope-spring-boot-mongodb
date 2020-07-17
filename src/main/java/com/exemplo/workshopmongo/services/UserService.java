@@ -20,15 +20,11 @@ public class UserService {
 	public List<User> findAll(){		
 		return repo.findAll();
 	}
-/*	
+
 	public User findById(String id) {
-		User user = repo.findOne(id);
-		if(user == null) {
-			throw new ObjectNotFoundException("Objeto não encontrado. ");
-		}
-		return user;
-	}
-*/	
+		Optional<User> obj = repo.findById(id);		
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));		
+	}	
 	
 	public User insert(User obj) {
 		return repo.insert(obj);
@@ -37,13 +33,13 @@ public class UserService {
 	public void delete(String id) {		
 		repo.deleteById(id);
 	}
-	/*
+
 	public User update(User obj) {
-		User newObj = repo.findOne(obj.getId());
+		User newObj = findById(obj.getId());
 		updateData(newObj, obj);
 		return repo.save(newObj);
 	}
-	*/
+
 	private void updateData(User newObj, User obj) {
 		newObj.setName(obj.getName());
 		newObj.setEmail(obj.getEmail());
