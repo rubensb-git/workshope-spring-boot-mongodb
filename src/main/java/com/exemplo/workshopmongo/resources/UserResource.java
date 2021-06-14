@@ -17,6 +17,10 @@ import com.exemplo.workshopmongo.domain.User;
 import com.exemplo.workshopmongo.dto.UserDTO;
 import com.exemplo.workshopmongo.services.UserService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(value="Rest controller usuário")
 @RestController
 @RequestMapping(value="/users")
 public class UserResource {
@@ -24,6 +28,7 @@ public class UserResource {
 	@Autowired
 	private UserService service;
 	
+	@ApiOperation(value="Retorna todos os usuários")
 	@RequestMapping(method=RequestMethod.GET)
 	//@GetMapping
 	//public List<User> findAll() {	
@@ -40,13 +45,15 @@ public class UserResource {
 		return ResponseEntity.ok().body(listDto);
 		
 	}
-
+	
+	@ApiOperation(value="Retorna o usuário por id")
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(new UserDTO(obj));		
 	}
 	
+	@ApiOperation(value="Excluir um usuário")
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable String id) {
 		service.delete(id);
@@ -54,6 +61,7 @@ public class UserResource {
 		
 	}		
 	
+	@ApiOperation(value="Cria um novo usuário")
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody UserDTO objDto) {
 		User obj = service.fromDto(objDto);
@@ -62,6 +70,7 @@ public class UserResource {
 		return ResponseEntity.created(uri).build();
 	}		
 	
+	@ApiOperation(value="Atualiza os dados de um usuário")
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody UserDTO objDto, @PathVariable String id) {
 		User obj = service.fromDto(objDto);
